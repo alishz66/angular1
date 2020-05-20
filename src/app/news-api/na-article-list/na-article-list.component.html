@@ -1,8 +1,8 @@
-<h3>World News</h3>
+<h3>US News</h3>
 <div class="list-group">
   <a
     href=""
-    *ngFor="let article of articles"
+    *ngFor="let article of UsArticles"
     class="list-group-item list-group-item-action"
     [href]="article.url"
     target="_blank"
@@ -11,5 +11,28 @@
   </a>
 </div>
 
-<app-paginator [numberOfPages]="totalPages" (onPageChange)="gotoPage($event)">
+<app-paginator
+  [totalRecordNumber]="UsTotalRecordNumber"
+  (onPageChange)="gotoPageUsNews($event)"
+>
+</app-paginator>
+
+<hr />
+<h3>Uk News</h3>
+<div class="list-group">
+  <a
+    href=""
+    *ngFor="let article of UkArticles"
+    class="list-group-item list-group-item-action"
+    [href]="article.url"
+    target="_blank"
+  >
+    {{ article.title | trimOutletName: article.source.name }}
+  </a>
+</div>
+
+<app-paginator
+  [totalRecordNumber]="UkTotalRecordNumber"
+  (onPageChange)="gotoPageUkNews($event)"
+>
 </app-paginator>

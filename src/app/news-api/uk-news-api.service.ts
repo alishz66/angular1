@@ -15,15 +15,14 @@ export interface Article {
     name: string;
   };
 }
-
 @Injectable({
   providedIn: 'root',
 })
-export class NewsApiService {
+export class UkNewsApiService {
   private url = 'https://newsapi.org/v2/top-headlines';
   private pageSize: number;
   private apiKey = 'a896adf6646342bd81e6c3a83fd4a93f';
-  private country = 'us';
+  private country = 'gb';
 
   private pagesInput: Subject<number>;
   pagesOutput: Observable<Article[]>;

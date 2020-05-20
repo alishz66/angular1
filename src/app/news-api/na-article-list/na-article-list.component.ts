@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsApiService, Article } from '../news-api.service';
+import { PaginatorCommand } from 'src/app/shared/paginator/paginator.component';
+import { UkNewsApiService } from '../uk-news-api.service';
 
 @Component({
   selector: 'app-na-article-list',
@@ -7,21 +9,41 @@ import { NewsApiService, Article } from '../news-api.service';
   styleUrls: ['./na-article-list.component.css'],
 })
 export class NaArticleListComponent implements OnInit {
-  articles: Article[];
-  totalPages: number;
-  constructor(private newsApiService: NewsApiService) {
+  UsArticles: Article[];
+  UsTotalRecordNumber: number;
+  UkArticles: Article[];
+  UkTotalRecordNumber: number;
+  pageSize = 5;
+  constructor(
+    private newsApiService: NewsApiService,
+    private ukNewsApiService: UkNewsApiService
+  ) {
     newsApiService.pagesOutput.subscribe((articles) => {
-      this.articles = articles;
+      this.UsArticles = articles;
     });
-    newsApiService.numberOfPages.subscribe((totalPages) => {
-      this.totalPages = totalPages;
+    newsApiService.totalRecordNumber.subscribe((totalPages) => {
+      this.UsTotalRecordNumber = totalPages;
     });
-    this.newsApiService.getPage(1);
+
+
+    ukNewsApiService.pagesOutput.subscribe((articles) => {
+      this.UkArticles = articles;
+    });
+    ukNewsApiService.totalRecordNumber.subscribe((totalPages) => {
+      this.UkTotalRecordNumber = totalPages;
+    });
+    this.ukNewsApiService.getPage(1, this.pageSize);
   }
 
-  gotoPage(pageNumber: number) {
-    this.newsApiService.getPage(pageNumber);
+  gotoPageUsNews(command: PaginatorCommand) {
+    this.newsApiService.getPage(command.page, command.pageSize);
   }
+  gotoPageUkNews(command: PaginatorCommand) {
+    this.ukNewsApiService.getPage(command.page, command.pageSize);
+  }
+  //یا دوتا متود بالا رو یکی میکنیم و با یه متعیر ورودی و یه شرط اینکارو میکنیم
+
+
 
   ngOnInit(): void {}
 }
