@@ -41,7 +41,10 @@
       *ngIf="currentPage !== numberOfPages ? true : false"
       (click)="gotoPage(numberOfPages)"
     >
-      <a class="page-link" href="javascript:void(0);">Last Page</a>
+      <a class="page-link" href="javascript:void(0);"
+        >Last Page
+        <span class="badge badge-info">{{ numberOfPages }}</span>
+      </a>
     </li>
   </ul>
 </nav>
